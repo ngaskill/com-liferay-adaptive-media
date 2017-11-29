@@ -20,6 +20,7 @@ import com.liferay.adaptive.media.image.internal.processor.util.TiffOrientationT
 import com.liferay.adaptive.media.image.internal.util.RenderedImageUtil;
 import com.liferay.adaptive.media.image.scaler.AMImageScaledImage;
 import com.liferay.adaptive.media.image.scaler.AMImageScaler;
+import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.image.ImageToolUtil;
 import com.liferay.portal.kernel.repository.model.FileVersion;
@@ -70,9 +71,11 @@ public class AMDefaultImageScaler implements AMImageScaler {
 		}
 		catch (IOException | PortalException e) {
 			throw new AMRuntimeException.IOException(
-				"Couldn't scale file entry " + fileVersion.getFileEntryId() +
-					" to match Adaptive Media configuration " +
-						amImageConfigurationEntry.getUUID(),
+				StringBundler.concat(
+					"Couldn't scale file entry ",
+					String.valueOf(fileVersion.getFileEntryId()),
+					" to match Adaptive Media configuration ",
+					amImageConfigurationEntry.getUUID()),
 				e);
 		}
 	}
